@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+# For plain Ruby scripts
+gem 'debug'
+
+group :development do
+  gem 'rubocop-fjord', require: false
+end
+
+# gem "rails"
