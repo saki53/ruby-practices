@@ -22,4 +22,5 @@ def calendar
   end
   puts "\n"
 end
+
 calendar
