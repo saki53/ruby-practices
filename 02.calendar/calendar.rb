@@ -1,8 +1,8 @@
-#!/usr/bin/env ruby
-def calendar
-  require 'date'
-  require 'optparse'
+# !/usr/bin/env ruby
+require 'date'
+require 'optparse'
 
+def calendar
   month = Date.today.month
   year = Date.today.year
 
@@ -17,10 +17,10 @@ def calendar
   last_date = Date.new(year, month, -1)
   print '   ' * first_date.wday
   (first_date..last_date).each do |date|
-    print format('%2d ', date.day)
+    printf '%2d ', date.day
     print "\n" if date.saturday?
   end
-  puts "\n"
+  print "\n" unless last_date.saturday?
 end
 
 calendar
