@@ -10,12 +10,6 @@ def create_rows(files, columns_count)
     rows[index % row_count] << file
   end
   rows
-
-  index = 0
-  files.each_with_object(Array.new(row_count) { [] }) do |file, rows|
-    rows[index % row_count] << file
-    index += 1
-  end
 end
 
 # 各行の要素を横幅を揃えて整形する関数
