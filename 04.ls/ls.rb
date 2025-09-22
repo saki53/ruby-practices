@@ -2,32 +2,37 @@
 
 # !/usr/bin/env ruby
 
-# ファイルと列数から配列を作成する関数
-def create_file_array(files, num_columns)
-  row_num = (files.size / num_columns.to_f).ceil
-  array = Array.new(row_num) { [] }
+# 行ごとに分割した配列を作成する関数
+def create_rows(files, columns_count)
+  row_count = files.size.ceildiv(columns_count)
+  rows = Array.new(row_count) { [] }
   files.each_with_index do |file, index|
-    array[index % row_num] << file
+    rows[index % row_count] << file
   end
-  array
+  rows
+
+  index = 0
+  files.each_with_object(Array.new(row_count) { [] }) do |file, rows|
+    rows[index % row_count] << file
+    index += 1
+  end
 end
 
 # 各行の要素を横幅を揃えて整形する関数
 def format_row(array)
   max_len = array.flatten.map(&:length).max
-  array.each do |row|
-    row.each_with_index do |f, i|
-      row[i] = f.to_s.ljust(max_len + 1)
+  array.map do |row|
+    row.map do |f|
+      f.to_s.ljust(max_len + 1)
     end
   end
-  array
 end
 
 # メイン処理
 files = Dir.glob('*').sort
 num_columns = 3
 
-result = create_file_array(files, num_columns)
+result = create_rows(files, num_columns)
 
 result = format_row(result)
 
