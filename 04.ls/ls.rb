@@ -2,6 +2,8 @@
 
 # !/usr/bin/env ruby
 
+NUM_COLUMNS = 3
+
 # 行ごとに分割した配列を作成する関数
 def create_rows(files, columns_count)
   row_count = files.size.ceildiv(columns_count)
@@ -13,23 +15,22 @@ def create_rows(files, columns_count)
 end
 
 # 各行の要素を横幅を揃えて整形する関数
-def format_row(array)
-  max_len = array.flatten.map(&:length).max
-  array.map do |row|
-    row.map do |f|
-      f.to_s.ljust(max_len + 1)
+def format_rows(rows)
+  max_len = rows.flatten.map(&:length).max
+  rows.map do |row|
+    row.map do |file_name|
+      file_name.to_s.ljust(max_len + 1)
     end
   end
 end
 
 # メイン処理
 files = Dir.glob('*').sort
-num_columns = 3
 
-result = create_rows(files, num_columns)
+rows = create_rows(files, NUM_COLUMNS)
 
-result = format_row(result)
+formatted_rows = format_rows(rows)
 
-result.each do |row|
+formatted_rows.each do |row|
   puts row.compact.join
 end
