@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # !/usr/bin/env ruby
+require 'optparse'
 
 NUM_COLUMNS = 3
 
@@ -25,7 +26,17 @@ def format_rows(rows)
 end
 
 # メイン処理
-files = Dir.glob('*').sort
+show_all = false
+opt = OptionParser.new
+opt.on('-a') { show_all = true }
+opt.parse!(ARGV)
+
+files =
+  if show_all
+    Dir.glob(['*', '.*']).sort
+  else
+    Dir.glob('*').sort
+  end
 
 rows = create_rows(files, NUM_COLUMNS)
 
