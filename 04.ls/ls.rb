@@ -31,8 +31,8 @@ opt = OptionParser.new
 opt.on('-a') { show_all = true }
 opt.parse!(ARGV)
 
-pattern = show_all ? File::FNM_DOTMATCH : 0
-files = Dir.glob('*', pattern).sort
+flag = show_all ? File::FNM_DOTMATCH : 0
+files = Dir.glob('*', flag).sort
 
 rows = create_rows(files, NUM_COLUMNS)
 
