@@ -26,13 +26,18 @@ def format_rows(rows)
 end
 
 # メイン処理
-show_all = false
+options = {
+  show_all: false,
+  reverse: false
+}
 opt = OptionParser.new
-opt.on('-a') { show_all = true }
+opt.on('-a') { options[:show_all] = true }
+opt.on('-r') { options[:reverse] = true }
 opt.parse!(ARGV)
 
-flags = show_all ? File::FNM_DOTMATCH : 0
+flags = options[:show_all] ? File::FNM_DOTMATCH : 0
 files = Dir.glob('*', flags).sort
+files.reverse! if options[:reverse]
 
 rows = create_rows(files, NUM_COLUMNS)
 
